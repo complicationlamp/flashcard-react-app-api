@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: GmwRae7Mb2BMnkNBjJHqqvrJwoyI1SuRSjChH8pXzXfHVZ05k2df/nHjvxktnevfx8hoVKweHiQTPhLyddSVlp/DXY9yfHJpVaOyndPWLU8PUaoWQ+zHhOspwJ6X7v/mNLsIbCWhEiwFM48QYWPwDicAjMeP5fNyrA7qmjE2RdRfAIJAqEE8BEBLjyPhB4cysm0tmD0i1wM6WjL2NOoK674nZkBtMKM2qcJ53MVOhfmcnay7O/C0yFklw4KllcUJsMSbSQQ6KGIR/UUrmMNTyHeCEQz4IBS/HyjvMbH2OGlrLGzK5AumeAnaARTPq1fX1ZabNIlvgtEOsynJukXc++OrL0phF5O8QnfIQvChqpo6Od1c7VxYbtIL/MU+NaWksq1so+kcPNVozyHCS+laLoDcbi5Q8ZVvQHQlsyy+zrmY57mz4GIu9T2m7fHQ94uSejW2NQg4/sugr2szpGfvNAQz3LffVweCu1elbWez8+x8ABKMUEdKTMwm7UFScDflucC+dnvdjBx5GWcG9HUCFjIqDidXrQWluI0a5x1EAUo0nd9V8h0jDQHMGDi3nC3tlq8QKZHXL8VLsErGT5NfxamgKnUwRBqf+1zMfTZ8zwTjd9YEDhItujcKKefihH7r7R2WVRiwyB9ujgQcQykDV+bcXQpfuD2xlhM1LPV8iYE=
+  app: flashcard-quiz-api
+  on:
+    repo: complicationlamp/flashcard-react-app-api
