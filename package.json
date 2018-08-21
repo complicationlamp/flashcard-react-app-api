@@ -2,7 +2,7 @@
   "name": "flashcard-react-app-api",
   "version": "1.0.0",
   "description": "flashcard-usr-data",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "mocha --exit"
