@@ -10,10 +10,10 @@ app.use(
     })
 );
 
-// ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
-// TODO:create get endpoints (DO CARDS FIRST) =>>>>> THEN: AS I GO
-// TODO: create tests for each tiny little thing => embody papa roach/Paul Ryan ~ "I'm about to break"
-// ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
+///////////////////////////////////////BUILD NOTE//////////////////////////////////////
+TODO:create get endpoints (DO CARDS FIRST) =>>>>> THEN: AS I GO
+TODO: create tests for each tiny little thing => embody papa roach/Paul Ryan ~ "I'm about to break"
+///////////////////////////////////////BUILD NOTE//////////////////////////////////////
 
  const PORT = process.env.PORT || 3000;
 
