@@ -4,7 +4,7 @@
  const {CLIENT_ORIGIN} = require('./config/config.js');
  const {DB_URL} = require('./config/database');
 //  =================================WED===========================//
- const { Questions } = require('./models');
+ const { Questions } = require('./models/QuestionModels.js');
  //  =================================WED===========================//
 
 app.use(
