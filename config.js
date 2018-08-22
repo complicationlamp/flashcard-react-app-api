@@ -1,6 +1,6 @@
 'use strict';
 // ========================================================
-// Exporting to mLab database
+// Exporting client origin
 // ========================================================
 
 module.exports = {
