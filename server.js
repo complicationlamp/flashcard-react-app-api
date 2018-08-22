@@ -1,7 +1,8 @@
  const express = require('express');
  const app = express();
  const cors = require('cors');
- const {CLIENT_ORIGIN} = require('./config');
+ const {CLIENT_ORIGIN} = require('./config/config');
+ const {configDB} = require('./config/database.js');
 
 app.use(
     cors({
