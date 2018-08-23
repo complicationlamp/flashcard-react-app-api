@@ -21,7 +21,15 @@ app.use(
  const PORT = process.env.PORT || 3000;
 
  app.get('/questions', (req, res) => {
-   res.json(Questions.get());
+    return Questions.find().exec(
+        function (err, result) {
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          res.json(result);
+        });
  });
 
 //  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

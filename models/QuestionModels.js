@@ -26,7 +26,8 @@ questionModelSchema.methods.serialize = function() {
     link: this.link,
   };
 };
-
-const Questions = mongoose.model('Questions', questionModelSchema);
+// mongoose takes Question=> questions 
+// NOTE: must match in mlab caused me some problems
+const Questions = mongoose.model('Question', questionModelSchema);
 
 module.exports = { Questions };
