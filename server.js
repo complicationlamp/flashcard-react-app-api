@@ -20,11 +20,11 @@ app.use(
 
  const PORT = process.env.PORT || 3000;
 
- app.get('/api/*', (req, res) => {
-   res.json({ok: true});
+ app.get('/questions', (req, res) => {
+   res.json(Questions.get());
  });
 
- app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+//  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
 let server;
 function runServer(TEST_DATABASE_URL) {
@@ -34,8 +34,8 @@ function runServer(TEST_DATABASE_URL) {
       if (err) {
         return reject(err);
       }
-      server = app.listen(port, () => {
-        console.log(`Your app is listening on port ${port}`);
+      server = app.listen(PORT, () => {
+        console.log(`Your app is listening on port ${PORT}`);
         resolve();
       })
         .on('error', err => {
