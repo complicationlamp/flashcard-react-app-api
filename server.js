@@ -38,7 +38,7 @@ let server;
 function runServer(TEST_DATABASE_URL) {
 
   return new Promise((resolve, reject) => {
-    mongoose.connect(TEST_DATABASE_URL, err => {
+    mongoose.connect('TEST_DATABASE_URL', err => {
       if (err) {
         return reject(err);
       }
