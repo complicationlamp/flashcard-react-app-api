@@ -26,8 +26,10 @@ questionModelSchema.methods.serialize = function() {
     link: this.link,
   };
 };
-// mongoose takes Question=> questions 
+// ========================NEED TO KNOW=======================================
+// mongoose takes model and makes it lowercase and plural (Question=> questions)
 // NOTE: must match in mlab caused me some problems
+// ========================NEED TO KNOW=======================================
 const Questions = mongoose.model('Question', questionModelSchema);
 
 module.exports = { Questions };
