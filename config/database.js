@@ -5,5 +5,5 @@
 // ========================================================
 
 module.exports = {
-	'DB_URL' : 'mongodb://complicationlamp:gradschool1@ds227352.mlab.com:27352/flashcard-react-app',
+	'url' : 'mongodb://complicationlamp:gradschool1@ds227352.mlab.com:27352/flashcard-react-app',
   };
