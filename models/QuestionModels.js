@@ -1,38 +1,32 @@
 'use strict';
-///////////////////////////////////////WARNING COPYIED FROM OLD///////////////////
-///////////////////////////////////////WARNING COPYIED FROM OLD///////////////////
-///////////////////////////////////////WARNING COPYIED FROM OLD///////////////////
+
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const blogPostSchema = mongoose.Schema({
-  author: {
-    firstName: String,
-    lastName: String
-  },
-  title: {type: String, required: true},
-  content: {type: String},
-  created: {type: Date, default: Date.now}
+const questionModelSchema = mongoose.Schema({
+  subject: {type: String, required: true},
+  question: {type: String, required: true},
+  answer: {type: String, required: true},
+  wrongAnsOne: {type: String, required: true},
+  wrongAnsTwo: {type: String},
+  wrongAnsThree: {type: String}, 
+  created: {type: Date, default: Date.now},
+  link: {type: String}
 });
 
-
-blogPostSchema.virtual('authorName').get(function() {
-  return `${this.author.firstName} ${this.author.lastName}`.trim();
-});
-
-blogPostSchema.methods.serialize = function() {
+questionModelSchema.methods.serialize = function() {
   return {
     id: this._id,
-    author: this.authorName,
-    content: this.content,
-    title: this.title,
-    created: this.created
+    subject: this.subject,
+    question: this.question,
+    answer: this.answer,
+    wrongAnsOne: this.wrongAnsOne,
+    wrongAnsTwo: this.wrongAnsTwo,
+    wrongAnsThree: this.wrongAnsThree,
+    link: this.link,
   };
 };
 
-const BlogPost = mongoose.model('BlogPost', blogPostSchema);
-///////////////////////////////////////WARNING COPYIED FROM OLD///////////////////
-///////////////////////////////////////WARNING COPYIED FROM OLD///////////////////
-///////////////////////////////////////WARNING COPYIED FROM OLD///////////////////
+const Questions = mongoose.model('Questions', questionModelSchema);
 
 module.exports = { Questions };
