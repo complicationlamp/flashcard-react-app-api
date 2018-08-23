@@ -27,9 +27,9 @@ app.use(
             console.error(err);
             return;
           }
-
           res.json(result);
         });
+
  });
 
 //  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

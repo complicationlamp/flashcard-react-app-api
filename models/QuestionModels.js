@@ -11,7 +11,7 @@ const questionModelSchema = mongoose.Schema({
   wrongAnsTwo: {type: String},
   wrongAnsThree: {type: String}, 
   created: {type: Date, default: Date.now},
-  link: {type: String}
+  link: {}
 });
 
 questionModelSchema.methods.serialize = function() {
