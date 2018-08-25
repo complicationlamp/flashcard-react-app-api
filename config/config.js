@@ -12,4 +12,5 @@ module.exports = {
   'CONFIG_DB' : 'mongodb://complicationlamp:gradschool1@ds227352.mlab.com:27352/flashcard-react-app',
 // test db with only one question
   'TEST_DATABASE_URL' : 'mongodb://complicationlamp:gradschool1@ds231242.mlab.com:31242/flashcard-react-app-test'
+
 };
