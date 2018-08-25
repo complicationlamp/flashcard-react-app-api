@@ -2,6 +2,8 @@
  const app = express();
  const cors = require('cors');
  const mongoose = require("mongoose");
+ const bodyParser = require('body-parser');
+ const jsonParser = bodyParser.json();
  const {
    CLIENT_ORIGIN,
    CONFIG_DB
@@ -26,15 +28,6 @@
  const PORT = process.env.PORT || 8081;
 
  app.get('/questions', (req, res) => {
-   // return Questions.find().exec(
-   //     function (err, result) {
-   //       if (err) {
-   //         console.error(err);
-   //         return;
-   //       }
-   //       res.json(result);
-   // });
-   // res.json({hi:"hello"});
    return Questions.find()
      .then(
        function (result) {
@@ -45,7 +38,20 @@
      })
  });
 
- //  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+ app.post('/questions', jsonParser, (req, res) => {
+   console.log('inshide post')
+   const requiredFields = ['subject', 'question', 'answer', 'wrongAnsOne'];
+   for (let i = 0; i < requiredFields.length; i++) {
+     const field = requiredFields[i];
+     console.log(field)
+     if (!(field in req.body)) {
+       const message = `Missing \`${field}\` in request body`
+       console.error(message);
+       return res.status(400).send(message);
+     }
+   }
+   res.status(201).json(req.body);
+ })
 
  let server;
 
