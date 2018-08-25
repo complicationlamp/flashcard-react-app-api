@@ -1,19 +1,19 @@
  const express = require('express');
  const app = express();
  const cors = require('cors');
- const mongoose = require("mongoose");
+ const mongoose = require('mongoose');
  const bodyParser = require('body-parser');
  const jsonParser = bodyParser.json();
+ mongoose.Promise = global.Promise;
  const {
    CLIENT_ORIGIN,
+  //  CONFIG_DB IS THE MAIN DB
    CONFIG_DB
  } = require('./config/config.js');
- //  =================================WED===========================//
- const {
+  const {
    Questions
  } = require('./models/QuestionModels.js');
- //  =================================WED===========================//
-
+ 
  app.use(
    cors({
      origin: CLIENT_ORIGIN
@@ -27,6 +27,7 @@
 
  const PORT = process.env.PORT || 8081;
 
+
  app.get('/questions', (req, res) => {
    return Questions.find()
      .then(
@@ -39,31 +40,47 @@
  });
 
  app.post('/questions', jsonParser, (req, res) => {
-   console.log('inshide post')
    const requiredFields = ['subject', 'question', 'answer', 'wrongAnsOne'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
-     console.log(field)
      if (!(field in req.body)) {
        const message = `Missing \`${field}\` in request body`
-       console.error(message);
        return res.status(400).send(message);
      }
    }
+   Questions.create({
+    subject: req.body.subject,
+    question: req.body.question,
+    answer: req.body.answer,
+    wrongAnsOne: req.body.wrongAnsOne,
+    wrongAnsTwo: req.body.wrongAnsTwo,
+    wrongAnsThree: req.body.wrongAnsThree,
+    created: req.body.created,
+    link: req.body.link
+   })
    res.status(201).json(req.body);
- })
+ });
+
+//================================ POTENTIAL PROBLEM=====================================================//
+// JSON is puting and deleting on _id, but says id in the endpoint
+//=======================================================================================================
+app.delete('/questions/:id', (req, res) => {
+   Questions.findByIdAndRemove(req.params.id)
+   .then(() => res.status(204).end())
+   .catch(err => res.status(500).json({message: 'Internal server error'}));
+  //  console.log(`Deleted Quiestion # \` ${req.params.id}\``);
+ });
 
  let server;
 
- function runServer(CONFIG_DB) {
-
+ function runServer(CONFIG_DB, port=PORT) {
    return new Promise((resolve, reject) => {
      mongoose.connect(CONFIG_DB, err => {
        if (err) {
          return reject(err);
        }
-       server = app.listen(PORT, () => {
-           console.log(`Your app is listening on port ${PORT}`);
+       server = app.listen(port, () => {
+           console.log(`Your app is listening on port ${port}`);
            resolve();
          })
          .on('error', err => {
