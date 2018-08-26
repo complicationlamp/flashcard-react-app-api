@@ -43,12 +43,11 @@ describe('My App', function () {
           console.log("strung");
           res.should.have.status(200);
           res.should.be.json;
-          //added but didnt work
         });
     });
   });
   describe('POST Endpoint', function () {
-    it('should add a new question to the DB', function () {
+    it.only('should add a new question to the DB', function () {
       const newQuestionTest = {
         subject: faker.random.word(),
         question: faker.lorem.sentence(),
@@ -59,7 +58,7 @@ describe('My App', function () {
         link: faker.internet.url()
       };
       return chai.request(app)
-        .post('./questions')
+        .post('/questions')
         .send(newQuestionTest)
         .then(function (res) {
           console.log(res.body);
