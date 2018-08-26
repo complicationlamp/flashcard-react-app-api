@@ -1,5 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const faker = require('faker');
 const {
   TEST_DATABASE_URL
 } = require('../config/config')
@@ -23,7 +24,10 @@ describe('My App', function () {
     return closeServer(TEST_DATABASE_URL);
     console.log("server closed")
   });
-  describe('Questions', function () {
+
+  // ==========================ENDPOINT TESTS=====================
+
+  describe('GET ENDPOINT', function () {
     it('should return the questions from the GET endpoint', function () {
       return chai.request(app)
         .get('/questions')
@@ -43,4 +47,11 @@ describe('My App', function () {
         });
     });
   });
+  describe('POST Endpoint', function() {
+    it('should add a new question to the DB', function () {
+      const newQuestionTest = {
+
+      }
+    })
+  })
 })
