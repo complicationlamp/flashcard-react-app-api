@@ -47,11 +47,23 @@ describe('My App', function () {
         });
     });
   });
-  describe('POST Endpoint', function() {
+  describe('POST Endpoint', function () {
     it('should add a new question to the DB', function () {
       const newQuestionTest = {
-
-      }
+        subject: faker.random.word(),
+        question: faker.lorem.sentence(),
+        answer: faker.random.word(),
+        wrongAnsOne: faker.random.word(),
+        wrongAnsTwo: faker.random.words(),
+        wrongAnsThree: faker.random.words(),
+        link: faker.internet.url()
+      };
+      return chai.request(app)
+        .post('./questions')
+        .send(newQuestionTest)
+        .then(function (res) {
+          console.log(res.body);
+        })
     })
   })
 })
