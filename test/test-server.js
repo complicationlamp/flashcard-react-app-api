@@ -2,9 +2,11 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const {
+  Questions
+} = require('../models/QuestionModels');
+const {
   TEST_DATABASE_URL
 } = require('../config/config')
-
 const {
   app,
   runServer,
@@ -12,6 +14,7 @@ const {
 } = require('../server');
 
 const should = chai.should();
+const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('My App', function () {
@@ -71,4 +74,24 @@ describe('My App', function () {
         });
     });
   });
+  describe('DELETE ENDPOINT', function () {
+    it.only('should delete a question from the db', function () {
+      let questionToDelete;
+      return Questions
+        .findOne()
+        .then(function (_questions) {
+          questions = _questions;
+          // console.log(_questions);
+          return chai.request(app).delete(`/questions/${questions.id}`);
+        })
+        .then(function (res) {
+          res.should.have.status(204);
+          return Questions.findById(questions.id);
+        })
+        .then(function(_questions) {
+          // console.log(_questions);
+          expect(_questions).to.be.null;
+        });
+    })  
+  })
 })
