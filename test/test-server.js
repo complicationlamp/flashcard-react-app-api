@@ -40,14 +40,14 @@ describe('My App', function () {
       return chai.request(app)
         .get('/questions')
         .then(function (res) {
-          console.log("strung");
+          // console.log();
           res.should.have.status(200);
           res.should.be.json;
         });
     });
   });
   describe('POST Endpoint', function () {
-    it.only('should add a new question to the DB', function () {
+    it('should add a new question to the DB', function () {
       const newQuestionTest = {
         subject: faker.random.word(),
         question: faker.lorem.sentence(),
@@ -61,8 +61,14 @@ describe('My App', function () {
         .post('/questions')
         .send(newQuestionTest)
         .then(function (res) {
-          console.log(res.body);
-        })
-    })
-  })
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          (res.body).should.include.keys(
+            'subject', 'question', 'answer', 'wrongAnsOne',
+            'wrongAnsTwo', 'wrongAnsThree', 'link');
+          // console.log(res.body);
+        });
+    });
+  });
 })
