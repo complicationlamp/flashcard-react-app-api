@@ -1,21 +1,118 @@
  const express = require('express');
  const app = express();
  const cors = require('cors');
- const {CLIENT_ORIGIN} = require('./config/config');
- const {DB_URL} = require('./config/database');
+ const mongoose = require('mongoose');
+ const bodyParser = require('body-parser');
+ const jsonParser = bodyParser.json();
+ mongoose.Promise = global.Promise;
+ const {
+   CLIENT_ORIGIN,
+  //  CONFIG_DB IS THE MAIN DB
+   CONFIG_DB
+ } = require('./config/config.js');
+  const {
+   Questions
+ } = require('./models/QuestionModels.js');
+ 
+ app.use(
+   cors({
+     origin: CLIENT_ORIGIN
+   })
+ );
 
-app.use(
-    cors({
-        origin: CLIENT_ORIGIN
-    })
-);
+ // ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
+ // TODO:create get endpoints (DO CARDS FIRST) =>>>>> THEN: AS I GO
+ // TODO: create tests for each tiny little thing => embody papa roach/Paul Ryan ~ "I'm about to break"
+ // ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
 
- const PORT = process.env.PORT || 3000;
+ const PORT = process.env.PORT || 8081;
 
- app.get('/api/*', (req, res) => {
-   res.json({ok: true});
+
+ app.get('/questions', (req, res) => {
+   return Questions.find()
+     .then(
+       function (result) {
+         return res.json(result);
+       }
+     ).catch(function (err) {
+       console.log(err);
+     })
  });
 
- app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+ app.post('/questions', jsonParser, (req, res) => {
+   const requiredFields = ['subject', 'question', 'answer', 'wrongAnsOne'];
+   for (let i = 0; i < requiredFields.length; i++) {
+     const field = requiredFields[i];
+     if (!(field in req.body)) {
+       const message = `Missing \`${field}\` in request body`
+       return res.status(400).send(message);
+     }
+   }
+   Questions.create({
+    subject: req.body.subject,
+    question: req.body.question,
+    answer: req.body.answer,
+    wrongAnsOne: req.body.wrongAnsOne,
+    wrongAnsTwo: req.body.wrongAnsTwo,
+    wrongAnsThree: req.body.wrongAnsThree,
+    created: req.body.created,
+    link: req.body.link
+   })
+   res.status(201).json(req.body);
+ });
 
- module.exports = {app};
+//================================ POTENTIAL PROBLEM=====================================================//
+// JSON is puting and deleting on _id, but says id in the endpoint
+//=======================================================================================================
+app.delete('/questions/:id', (req, res) => {
+   Questions.findByIdAndRemove(req.params.id)
+   .then(() => res.status(204).end())
+   .catch(err => res.status(500).json({message: 'Internal server error'}));
+  //  console.log(`Deleted Quiestion # \` ${req.params.id}\``);
+ });
+
+ let server;
+
+ function runServer(CONFIG_DB, port=PORT) {
+   return new Promise((resolve, reject) => {
+     mongoose.connect(CONFIG_DB, err => {
+       if (err) {
+         return reject(err);
+       }
+       server = app.listen(port, () => {
+           console.log(`Your app is listening on port ${port}`);
+           resolve();
+         })
+         .on('error', err => {
+           mongoose.disconnect();
+           reject(err);
+         });
+     });
+   });
+ }
+ // this function closes the server, and returns a promise. we'll
+ // use it in our integration tests later.
+ function closeServer() {
+   return mongoose.disconnect().then(() => {
+     return new Promise((resolve, reject) => {
+       console.log('Closing server');
+       server.close(err => {
+         if (err) {
+           return reject(err);
+         }
+         resolve();
+       });
+     });
+   });
+ }
+ // if server.js is called directly (aka, with `node server.js`), this block
+ // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
+ if (require.main === module) {
+   runServer(CONFIG_DB).catch(err => console.error(err));
+ }
+
+ module.exports = {
+   app,
+   runServer,
+   closeServer
+ };
