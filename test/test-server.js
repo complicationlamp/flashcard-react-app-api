@@ -18,6 +18,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('My App', function () {
+
   before(function () {
     return runServer(TEST_DATABASE_URL);
     console.log("hit runserver");
@@ -30,7 +31,7 @@ describe('My App', function () {
 
   // ==========================ENDPOINT TESTS=====================
 
-  describe('GET ENDPOINT', function () {
+  describe('QUESTION: GET ENDPOINT', function () {
     it('should return the questions from the GET endpoint', function () {
       return chai.request(app)
         .get('/questions')
@@ -49,7 +50,7 @@ describe('My App', function () {
         });
     });
   });
-  describe('POST Endpoint', function () {
+  describe('QUESTION:POST Endpoint', function () {
     it('should add a new question to the DB', function () {
       const newQuestionTest = {
         subject: faker.random.word(),
@@ -74,7 +75,7 @@ describe('My App', function () {
         });
     });
   });
-  describe('DELETE ENDPOINT', function () {
+  describe('QUESTION:DELETE ENDPOINT', function () {
     it.only('should delete a question from the db', function () {
       let questionToDelete;
       return Questions
@@ -88,10 +89,10 @@ describe('My App', function () {
           res.should.have.status(204);
           return Questions.findById(questions.id);
         })
-        .then(function(_questions) {
+        .then(function (_questions) {
           // console.log(_questions);
           expect(_questions).to.be.null;
         });
-    })  
+    })
   })
 })
