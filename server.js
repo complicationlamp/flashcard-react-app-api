@@ -16,11 +16,11 @@
    Questions
  } = require('./models/QuestionModels.js');
  
-//  app.use(
-//    cors({
-//      origin: CLIENT_ORIGIN
-//    })
-//  );
+ app.use(
+   cors({
+     origin: CLIENT_ORIGIN
+   })
+ );
 
  // ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
  // TODO:create get endpoints (DO CARDS FIRST) =>>>>> THEN: AS I GO

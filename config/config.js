@@ -2,7 +2,7 @@
 
 module.exports = {
   // Exporting client origin
-  'CLIENT_ORIGIN' : 'http://localhoast:3000',
+  CLIENT_ORIGIN : 'http://localhost:3000',
 
 // ========================NEED TO KNOW=======================================
 // mongoose takes model and makes it lowercase and plural (Question=> questions)
