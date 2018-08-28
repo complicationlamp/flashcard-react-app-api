@@ -5,20 +5,22 @@
  const bodyParser = require('body-parser');
  const jsonParser = bodyParser.json();
  mongoose.Promise = global.Promise;
+
  const {
    CLIENT_ORIGIN,
   //  CONFIG_DB IS THE MAIN DB
    CONFIG_DB
  } = require('./config/config.js');
-  const {
+  
+ const {
    Questions
  } = require('./models/QuestionModels.js');
  
- app.use(
-   cors({
-     origin: CLIENT_ORIGIN
-   })
- );
+//  app.use(
+//    cors({
+//      origin: CLIENT_ORIGIN
+//    })
+//  );
 
  // ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
  // TODO:create get endpoints (DO CARDS FIRST) =>>>>> THEN: AS I GO
@@ -29,6 +31,7 @@
 
 
  app.get('/questions', (req, res) => {
+   console.log('get request made');
    return Questions.find()
      .then(
        function (result) {
@@ -39,6 +42,10 @@
      })
  });
 
+ app.get('/test', (req, res) => {
+   res.send('Hello')
+ })
+console.log("hererhhreherhr")
  app.post('/questions', jsonParser, (req, res) => {
    const requiredFields = ['subject', 'question', 'answer', 'wrongAnsOne'];
    for (let i = 0; i < requiredFields.length; i++) {
