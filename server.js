@@ -5,12 +5,14 @@
  const bodyParser = require('body-parser');
  const jsonParser = bodyParser.json();
  mongoose.Promise = global.Promise;
+
  const {
    CLIENT_ORIGIN,
   //  CONFIG_DB IS THE MAIN DB
    CONFIG_DB
  } = require('./config/config.js');
-  const {
+  
+ const {
    Questions
  } = require('./models/QuestionModels.js');
  
@@ -29,6 +31,7 @@
 
 
  app.get('/questions', (req, res) => {
+   console.log('get request made');
    return Questions.find()
      .then(
        function (result) {
