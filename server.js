@@ -42,10 +42,6 @@
      })
  });
 
- app.get('/test', (req, res) => {
-   res.send('Hello')
- })
-console.log("hererhhreherhr")
  app.post('/questions', jsonParser, (req, res) => {
    const requiredFields = ['subject', 'question', 'answer', 'wrongAnsOne'];
    for (let i = 0; i < requiredFields.length; i++) {
