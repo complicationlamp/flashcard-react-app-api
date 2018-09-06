@@ -71,18 +71,16 @@ describe('My App', function () {
           (res.body).should.include.keys(
             'subject', 'question', 'answer', 'wrongAnsOne',
             'wrongAnsTwo', 'wrongAnsThree', 'link');
-          // console.log(res.body);
         });
     });
   });
   describe('QUESTION:DELETE ENDPOINT', function () {
-    it.only('should delete a question from the db', function () {
+    it('should delete a question from the db', function () {
       let questionToDelete;
       return Questions
         .findOne()
         .then(function (_questions) {
           questions = _questions;
-          // console.log(_questions);
           return chai.request(app).delete(`/questions/${questions.id}`);
         })
         .then(function (res) {
