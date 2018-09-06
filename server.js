@@ -3,6 +3,7 @@
  const cors = require('cors');
  const mongoose = require('mongoose');
  const bodyParser = require('body-parser');
+ const passport = require('passport');
  const jsonParser = bodyParser.json();
  mongoose.Promise = global.Promise;
 
@@ -11,7 +12,10 @@
   //  CONFIG_DB IS THE MAIN DB
    CONFIG_DB
  } = require('./config/config.js');
-  
+ 
+ const { router: usersRouter } = require('./users');
+ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+
  const {
    Questions
  } = require('./models/QuestionModels.js');
@@ -72,6 +76,25 @@ app.delete('/questions/:id', (req, res) => {
    .then(() => res.status(204).end())
    .catch(err => res.status(500).json({message: 'Internal server error'}));
   //  console.log(`Deleted Quiestion # \` ${req.params.id}\``);
+ });
+
+ passport.use(localStrategy);
+ passport.use(jwtStrategy);
+ 
+ app.use('/users/', usersRouter);
+ app.use('/auth/', authRouter);
+ 
+ const jwtAuth = passport.authenticate('jwt', { session: false });
+ 
+ // A protected endpoint which needs a valid JWT to access it
+ app.get('/protected', jwtAuth, (req, res) => {
+   return res.json({
+     data: 'rosebud'
+   });
+ });
+ 
+ app.use('*', (req, res) => {
+   return res.status(404).json({ message: 'Not Found' });
  });
 
  let server;
