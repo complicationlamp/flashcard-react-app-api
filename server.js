@@ -26,13 +26,7 @@
    })
  );
 
- // ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
- // TODO:create get endpoints (DO CARDS FIRST) =>>>>> THEN: AS I GO
- // TODO: create tests for each tiny little thing => embody papa roach/Paul Ryan ~ "I'm about to break"
- // ///////////////////////////////////////BUILD NOTE//////////////////////////////////////
-
  const PORT = process.env.PORT || 8081;
-
 
  app.get('/questions', (req, res) => {
    console.log('get request made');
@@ -47,7 +41,7 @@
  });
 
  app.post('/questions', jsonParser, (req, res) => {
-   const requiredFields = ['subject', 'question', 'answer', 'wrongAnsOne'];
+   const requiredFields = ['subject', 'prompt', 'correctAnswer', 'answers'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
      if (!(field in req.body)) {
@@ -57,11 +51,9 @@
    }
    Questions.create({
     subject: req.body.subject,
-    question: req.body.question,
-    answer: req.body.answer,
-    wrongAnsOne: req.body.wrongAnsOne,
-    wrongAnsTwo: req.body.wrongAnsTwo,
-    wrongAnsThree: req.body.wrongAnsThree,
+    prompt: req.body.prompt,
+    correctAnswer: req.body.correctAnswer,
+    answers: req.body.answers,
     created: req.body.created,
     link: req.body.link
    })
