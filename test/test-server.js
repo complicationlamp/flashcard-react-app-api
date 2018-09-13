@@ -44,7 +44,6 @@ describe('My App', function () {
       return chai.request(app)
         .get('/questions')
         .then(function (res) {
-          // console.log();
           res.should.have.status(200);
           res.should.be.json;
         });
@@ -54,11 +53,9 @@ describe('My App', function () {
     it('should add a new question to the DB', function () {
       const newQuestionTest = {
         subject: faker.random.word(),
-        question: faker.lorem.sentence(),
-        answer: faker.random.word(),
-        wrongAnsOne: faker.random.word(),
-        wrongAnsTwo: faker.random.words(),
-        wrongAnsThree: faker.random.words(),
+        prompt: faker.lorem.sentence(),
+        correctAnswer: faker.random.word(),
+        answers: faker.random.word(),
         link: faker.internet.url()
       };
       return chai.request(app)
@@ -69,8 +66,8 @@ describe('My App', function () {
           res.should.be.json;
           res.body.should.be.a('object');
           (res.body).should.include.keys(
-            'subject', 'question', 'answer', 'wrongAnsOne',
-            'wrongAnsTwo', 'wrongAnsThree', 'link');
+            'subject', 'prompt', 'correctAnswer', 'answers',
+            'link');
         });
     });
   });
