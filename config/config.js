@@ -3,7 +3,7 @@ require('dotenv').config();
 
 module.exports = {
   // Exporting client origin
-  'CLIENT_ORIGIN' : 'http://www.looreddy.com/',
+  'CLIENT_ORIGIN' : 'http://www.looreddy.com',
 
 // ========================NEED TO KNOW=======================================
 // mongoose takes model and makes it lowercase and plural (Question=> questions)
