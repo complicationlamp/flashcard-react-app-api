@@ -26,8 +26,6 @@
    })
  );
 
- app.options('*', cors())
- 
  const PORT = process.env.PORT || 8081;
 
  app.get('/questions', (req, res) => {
