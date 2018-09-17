@@ -67,7 +67,6 @@ app.delete('/questions/:id', (req, res) => {
    Questions.findByIdAndRemove(req.params.id)
    .then(() => res.status(204).end())
    .catch(err => res.status(500).json({message: 'Internal server error'}));
-  //  console.log(`Deleted Quiestion # \` ${req.params.id}\``);
  });
 
  passport.use(localStrategy);
@@ -108,8 +107,7 @@ app.delete('/questions/:id', (req, res) => {
      });
    });
  }
- // this function closes the server, and returns a promise. we'll
- // use it in our integration tests later.
+ // this function closes the server, and returns a promise.
  function closeServer() {
    return mongoose.disconnect().then(() => {
      return new Promise((resolve, reject) => {

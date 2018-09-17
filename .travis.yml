@@ -5,6 +5,7 @@ services:
 deploy:
   provider: heroku
   api_key:
+  # NOTE: if heroku needs an updated psw, you need to generate  a new api key, or else it won't connect
     secure: td281xDxAyg0uF1PK9h5Xh6i7MTeYVgClAr52miiVNN4A9hoCnCDDw6Vj3iXynac4CtzMIqLV7ZKR5wUq81NIH1kTJHFS9LFiV5XOAj228xA3+kmenc/4efmIlFHz3fvHXqmd6QgaJwysgqfq9RpPREVjmmxwyzQTdd6ToIzg6+DFB7R8rfw/C2DqENNLxGppE10o3JLPS8FUY7Xw83V7E3hXEyXFSTEPvOyqX0DzVuCdrxWVkKggeFiWovgLtJlXByqE5ExKTPEs+DbzhsT/NhqtQ769LiUimqyYBCN0V5LeG4nZssBAW3GGrK86pLLDIVby4hhYf/440Z44a0rMw9SH4mroAvtN6Nh2UTp9iRYcOagl2GKAXqTfCoWrAwq7iOHv4RK+Jh8yHB2aILUOww7z59INJHQyXhD2H1Cn238UNIyNh0+V6/Eeh1JBNjsPiVBvS5AoCktLpqm/K8WT/i/sAcU+yFHb5p3XY/V20MfhWXdFtrfbTeYqX3rFi/F2ver2lWqQ2a2fgcSnH5yvOykTurBWrma06BUx6pgwWQ7npDVG9fh/BiqR/k1BrzmtSKe5KgwRMGlER/K+FrnoGT+Y2xR2npdKcfjWlk9oKihiEVmLkUbiUEIq+3lA6BkuXwzYDU5yrAVZ7jClM2cdG8l6k0LCYxesujJ67zyhxs=
   app: flashcard-quiz-api
   on:
