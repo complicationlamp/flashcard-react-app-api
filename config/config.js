@@ -3,7 +3,7 @@ require('dotenv').config();
 
 module.exports = {
   // Exporting client origin
-  'CLIENT_ORIGIN' : process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+  'CLIENT_ORIGIN' : 'https://flashcard-quiz-api.herokuapp.com' || 'http://localhost:3000',
 
   'CONFIG_DB' : 'mongodb://complicationlamp:gradschool1@ds227352.mlab.com:27352/flashcard-react-app',
 // test db with only one question
