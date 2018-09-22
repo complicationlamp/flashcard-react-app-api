@@ -9,8 +9,10 @@ const questionModelSchema = mongoose.Schema({
   correctAnswer: {type: String, required: true},
   answers: {type: Array, required: true},
   created: {type: Date, default: Date.now},
-  link: {}
-});
+  link: {},
+  // TODO:points to the other collection in the db
+  // author: {type:mongoose.Schema.Types.ObjectId, ref:'User' }
+}); 
 
 questionModelSchema.methods.serialize = function() {
   return {

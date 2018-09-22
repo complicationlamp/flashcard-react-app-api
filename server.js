@@ -1,3 +1,4 @@
+ const {User} = require('./users/models');
  const express = require('express');
  const app = express();
  const cors = require('cors');
@@ -49,6 +50,7 @@
        return res.status(400).send(message);
      }
    }
+   const userId= req.body.userId;
    Questions.create({
     subject: req.body.subject,
     prompt: req.body.prompt,
@@ -56,8 +58,18 @@
     answers: req.body.answers,
     created: req.body.created,
     link: req.body.link
+   }, 
+
+  //  Callback fuction that will add question id's to the user object. This basicly stores who made the questions.
+   function(err, question){
+      // console.log('QUESTION ID: ', question._id);
+      User.findOneAndUpdate({'_id': userId}, { '$push': {'questions': question._id} }, (err, updatedUserObject) => {
+        // remove the fat arrow if/when deleting the console.log()
+        console.log('updatedUserObject: ', updatedUserObject)
+      });
+      res.status(201).json(question);
    })
-   res.status(201).json(req.body);
+
  });
 
 //================================ POTENTIAL PROBLEM=====================================================//
