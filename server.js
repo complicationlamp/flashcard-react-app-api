@@ -41,6 +41,24 @@
      })
  });
 
+ app.post('/questions/personal/', jsonParser, (req, res) => {
+   // req.body.ids = ['id1', 'id2']
+   // $in: [['id1', 'id2']]
+   // $in: ['id1', 'id2']
+   Questions.find({
+      '_id': { $in: req.body.ids }
+    }, function(err, docs){
+        console.log(docs);
+    })
+    .then(
+      function (result) {
+        return res.json(result);
+      }
+    ).catch(function (err) {
+      console.log(err);
+    })
+ });
+
  app.post('/questions', jsonParser, (req, res) => {
    const requiredFields = ['subject', 'prompt', 'correctAnswer', 'answers'];
    for (let i = 0; i < requiredFields.length; i++) {
@@ -62,7 +80,8 @@
 
   //  Callback fuction that will add question id's to the user object. This basicly stores who made the questions.
    function(err, question){
-      // console.log('QUESTION ID: ', question._id);
+    console.log('QUESTION: ', question);
+      console.log('QUESTION ID: ', question._id);
       User.findOneAndUpdate({'_id': userId}, { '$push': {'questions': question._id} }, (err, updatedUserObject) => {
         // remove the fat arrow if/when deleting the console.log()
         console.log('updatedUserObject: ', updatedUserObject)
