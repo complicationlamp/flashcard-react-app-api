@@ -21,12 +21,12 @@ describe('My App', function () {
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
-    console.log("hit runserver");
+    // console.log("hit runserver");
   });
   //  turn it off when you complete the test"
   after(function () {
     return closeServer(TEST_DATABASE_URL);
-    console.log("server closed")
+    // console.log("server closed")
   });
 
   // ==========================ENDPOINT TESTS=====================
