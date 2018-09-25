@@ -1,3 +1,4 @@
+ const {User} = require('./users/models');
  const express = require('express');
  const app = express();
  const cors = require('cors');
@@ -40,6 +41,24 @@
      })
  });
 
+ app.post('/questions/personal/', jsonParser, (req, res) => {
+   // req.body.ids = ['id1', 'id2']
+   // $in: [['id1', 'id2']]
+   // $in: ['id1', 'id2']
+   Questions.find({
+      '_id': { $in: req.body.ids }
+    }, function(err, docs){
+        console.log(docs);
+    })
+    .then(
+      function (result) {
+        return res.json(result);
+      }
+    ).catch(function (err) {
+      console.log(err);
+    })
+ });
+
  app.post('/questions', jsonParser, (req, res) => {
    const requiredFields = ['subject', 'prompt', 'correctAnswer', 'answers'];
    for (let i = 0; i < requiredFields.length; i++) {
@@ -49,6 +68,7 @@
        return res.status(400).send(message);
      }
    }
+   const userId= req.body.userId;
    Questions.create({
     subject: req.body.subject,
     prompt: req.body.prompt,
@@ -56,8 +76,19 @@
     answers: req.body.answers,
     created: req.body.created,
     link: req.body.link
+   }, 
+
+  //  Callback fuction that will add question id's to the user object. This basicly stores who made the questions.
+   function(err, question){
+    console.log('QUESTION: ', question);
+      console.log('QUESTION ID: ', question._id);
+      User.findOneAndUpdate({'_id': userId}, { '$push': {'questions': question._id} }, (err, updatedUserObject) => {
+        // remove the fat arrow if/when deleting the console.log()
+        console.log('updatedUserObject: ', updatedUserObject)
+      });
+      res.status(201).json(question);
    })
-   res.status(201).json(req.body);
+
  });
 
 //================================ POTENTIAL PROBLEM=====================================================//

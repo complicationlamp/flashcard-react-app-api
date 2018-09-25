@@ -15,7 +15,9 @@ const UserSchema = mongoose.Schema({
     required: true
   },
   firstName: {type: String, default: ''},
-  lastName: {type: String, default: ''}
+  lastName: {type: String, default: ''},
+  // TODO:fix this up
+  questions: [{type:mongoose.Schema.Types.ObjectId, ref:'Question' }]
 });
 
 UserSchema.methods.serialize = function() {
@@ -24,6 +26,7 @@ UserSchema.methods.serialize = function() {
     firstName: this.firstName || '',
     lastName: this.lastName || '',
     id: this.id || '',
+    questions: this.questions || [],
   };
 };
 
