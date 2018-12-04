@@ -30,21 +30,16 @@
  const PORT = process.env.PORT || 8081;
 
  app.get('/questions', (req, res) => {
-   console.log('get request made');
    return Questions.find()
      .then(
        function (result) {
          return res.json(result);
        }
      ).catch(function (err) {
-       console.log(err);
      })
  });
 
  app.post('/questions/personal/', jsonParser, (req, res) => {
-   // req.body.ids = ['id1', 'id2']
-   // $in: [['id1', 'id2']]
-   // $in: ['id1', 'id2']
    Questions.find({
       '_id': { $in: req.body.ids }
     }, function(err, docs){
@@ -80,8 +75,8 @@
 
   //  Callback fuction that will add question id's to the user object. This basicly stores who made the questions.
    function(err, question){
-    console.log('QUESTION: ', question);
-      console.log('QUESTION ID: ', question._id);
+    // console.log('QUESTION: ', question);
+    //   console.log('QUESTION ID: ', question._id);
       User.findOneAndUpdate({'_id': userId}, { '$push': {'questions': question._id} }, (err, updatedUserObject) => {
         // remove the fat arrow if/when deleting the console.log()
         console.log('updatedUserObject: ', updatedUserObject)
@@ -91,9 +86,6 @@
 
  });
 
-//================================ POTENTIAL PROBLEM=====================================================//
-// JSON is puting and deleting on _id, but says id in the endpoint
-//=======================================================================================================
 app.delete('/questions/:id', (req, res) => {
    Questions.findByIdAndRemove(req.params.id)
    .then(() => res.status(204).end())
@@ -128,7 +120,7 @@ app.delete('/questions/:id', (req, res) => {
          return reject(err);
        }
        server = app.listen(port, () => {
-           console.log(`Your app is listening on port ${port}`);
+          //  console.log(`Your app is listening on port ${port}`);
            resolve();
          })
          .on('error', err => {
@@ -142,7 +134,6 @@ app.delete('/questions/:id', (req, res) => {
  function closeServer() {
    return mongoose.disconnect().then(() => {
      return new Promise((resolve, reject) => {
-       console.log('Closing server');
        server.close(err => {
          if (err) {
            return reject(err);
